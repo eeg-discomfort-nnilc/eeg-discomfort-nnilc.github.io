@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Uncovering EEG Patterns Consistently Associated with Cybersickness Discomfort Using Deep Learning Interpretability Maps</title>
+<meta name="description" content="Project page for arXiv:2512.20620 — deep learning interpretability maps reveal EEG scalp locations and early ERP time windows consistently associated with cybersickness discomfort across two VR datasets.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+
+<header class="masthead wrap">
+  <h1>Uncovering EEG Patterns Consistently Associated with Cybersickness Discomfort Using Deep Learning Interpretability&nbsp;Maps</h1>
+  <p class="authors">
+    <a class="au" href="https://www.linkedin.com/in/jacqueline-yau-836b0a132/">Jacqueline Yau</a><sup>1*</sup> ·
+    <a class="au" href="https://www.oulu.fi/en/researchers/evan-center">Evan G. Center</a><sup>2</sup> ·
+    <a class="au" href="https://scholar.google.pl/citations?user=jDXt1iAAAAAJ&amp;hl=en">Paweł Augustynowicz</a><sup>3</sup> ·
+    <a class="au" href="https://lavalle.pl/">Steven M. LaValle</a><sup>1,2</sup> ·
+    <a class="au" href="https://www.oulu.fi/en/researchers/timo-ojala">Timo Ojala</a><sup>2</sup> ·
+    <a class="au" href="https://siebelschool.illinois.edu/about/people/all-faculty/yuanwz">Wenzhen Yuan</a><sup>1</sup> ·
+    <a class="au" href="https://siebelschool.illinois.edu/about/people/all-faculty/namato">Nancy M. Amato</a><sup>1,5</sup> ·
+    <a class="au" href="https://scholar.google.com/citations?user=YYvaXf0AAAAJ&amp;hl=pl">Paweł Stróżak</a><sup>3</sup> ·
+    <a class="au" href="https://minjekim.com/">Minje Kim</a><sup>1</sup> ·
+    <a class="au" href="https://psychology.illinois.edu/directory/profile/kfederme">Kara D. Federmeier</a><sup>4,5</sup> ·
+    <a class="au" href="https://scholar.google.com/citations?user=dYgANTAAAAAJ&amp;hl=en">Katherine J. Mimnaugh</a><sup>1*</sup>
+  </p>
+  <p class="affil">
+    <sup>1</sup>Siebel School of Computing and Data Science, University of Illinois Urbana-Champaign<br>
+    <sup>2</sup>Faculty of Information Technology and Electrical Engineering, University of Oulu<br>
+    <sup>3</sup>Institute of Psychology, The John Paul II Catholic University of Lublin<br>
+    <sup>4</sup>Department of Psychology, University of Illinois Urbana-Champaign<br>
+    <sup>5</sup>Beckman Institute for Advanced Science and Technology, University of Illinois Urbana-Champaign<br>
+    <sup>*</sup>Corresponding authors
+  </p>
+  <p class="venue">In Submission</p>
+  <div class="btn-row">
+    <a class="btn" href="https://arxiv.org/abs/2512.20620">📄 Paper</a>
+    <a class="btn disabled" aria-disabled="true">💻 Code — coming soon</a>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <figure>
+    <div class="fig-pair">
+      <div class="figcard">
+        <img src="static/images/fig1a_topomap_erpvr_discomfort.png"
+             alt="Scalp map of electrode importance for discomfort classification (integrated gradients), ERPVR discomfort group: LLPf largest, with LDCe, RDCe, LMPf, RMOc prominent.">
+        <p class="subcap">(a) Discomfort group (ERPVR)</p>
+      </div>
+      <div class="figcard">
+        <img src="static/images/fig1b_topomap_erpvr_nodiscomfort.png"
+             alt="Scalp map of electrode importance, ERPVR no-discomfort group: centro-parietal electrodes MiPa, LMCe, RMCe, MiCe most important.">
+        <p class="subcap">(b) No-discomfort group (ERPVR)</p>
+      </div>
+      <div class="figcard">
+        <img src="static/images/fig1c_topomap_vectionvr_high.png"
+             alt="Scalp map of electrode importance, VectionVR high-discomfort group: C3, T7, and CPz largest.">
+        <p class="subcap">(c) High-discomfort group (VectionVR)</p>
+      </div>
+      <div class="figcard">
+        <img src="static/images/fig1d_topomap_vectionvr_low.png"
+             alt="Scalp map of electrode importance, VectionVR low-discomfort group: Fp1, right parietal P2, Pz, P4 prominent.">
+        <p class="subcap">(d) Low-discomfort group (VectionVR)</p>
+      </div>
+    </div>
+    <figcaption><span class="figno">Importance of electrode features for discomfort classification across all runs
+    (paper Fig. 1).</span> ERPVR (top) used a 16-channel approximately equidistant montage; VectionVR (bottom) used a
+    modified 30-channel 10–20 layout. Circle sizes and colors are based on calculated integrated gradients; crosshatched
+    circles contributed negatively. A subset of electrodes helpful for classifying discomfort by integrated
+    gradient positive attribution was found to carry cross-dataset.</figcaption>
+  </figure>
+
+
+  <section class="prose" id="abstract">
+    <p class="sec-label">Abstract</p>
+    <p>Uncomfortable sensations similar to motion sickness, called cybersickness, can develop when using
+    Virtual Reality (VR) head-mounted displays. Cybersickness poses a hindrance to greater use of VR
+    technology. Brain activity recorded using electroencephalogram (EEG) can be used to unintrusively
+    detect cybersickness and the discomfort it causes. To intervene for mitigation, machine learning
+    algorithms that can extract meaningful signals related to cybersickness discomfort from the rest of
+    the brain data will be required. In this work, we determined which features in EEG data were most
+    helpful for classifying cybersickness-related discomfort by building a framework with neural networks
+    and interpretability maps. Using brain data from two separate auditory event-related potential (ERP)
+    cybersickness user studies, we extracted which spatio-temporal EEG features (from sensor locations and
+    time steps) were most important for discomfort classification. For the first dataset (n=29), across
+    120 runs of our framework with three different neural networks over multiple random seeds, the models
+    consistently pointed to scalp locations in left frontal, midline central, and right parietal areas as
+    most helpful in determining if EEG data belonged to someone who was experiencing cybersickness
+    discomfort. Similar locations were also tagged in a second dataset (n=36), showing cross-dataset
+    generalizability of our findings across time, VR stimulus, and participant sample. Early periods in
+    the extracted ERP time windows, approximately between 80 and 260 milliseconds post-stimulus, were
+    marked as important for model classification in both datasets. These results help clarify which tagged
+    features can be used for cybersickness-related (and potentially other types of) discomfort
+    classification with EEG in the future.</p>
+  </section>
+
+
+  <section id="motivation">
+    <div class="prose">
+      <p class="sec-label">Motivation</p>
+      <h2>Identifying patterns in EEG data for cybersickness-related discomfort</h2>
+      <p>ERPVR&nbsp;<a href="#ref-erpvr">[5]</a> is a dataset of event-related potential (ERP) EEG data
+      from a study in which participants viewed a stimulus designed to elicit cybersickness. Given the
+      ERPVR dataset, the problem is twofold: 1) can we detect cybersickness-related discomfort in ERP
+      data — very short time windows of 1 second, with only 800&nbsp;ms after the ERP stimulus — and
+      2) if we can detect discomfort, are there any patterns in the ERP data that the ML models used to
+      inform their predictions?</p>
+      <!--
+      <p>Grand-average ERPs for the <span class="sick">discomfort</span> and
+      <span class="nonsick">no-discomfort</span> groups overlap almost completely — in <em>both</em>
+      datasets. No component separates the groups by inspection.
+       This is why classical waveform analysis
+      stalls, and why the study turns to deep models and attribution methods: whatever distinguishes brain
+      responses under cybersickness discomfort is subtle and subject-specific, not a grand-average
+      effect. 
+      </p>
+      -->
+    </div>
+    <!--
+    <figure>
+      <div class="fig-pair">
+        <div class="figcard">
+          <img src="static/images/figI16a_waveform_erpvr.png"
+               alt="ERPVR average ERP waveforms over the top-8 discomfort-classification electrodes: discomfort, no-discomfort, and grand-average traces overlapping almost completely.">
+          <p class="subcap">ERPVR (Standards, top-8 discomfort electrodes)</p>
+        </div>
+        <div class="figcard">
+          <img src="static/images/figI18a_waveform_vectionvr.png"
+               alt="VectionVR average ERP waveforms over the top-8 high-discomfort-classification electrodes: high-discomfort, low-discomfort, and grand-average traces overlapping almost completely.">
+          <p class="subcap">VectionVR (Standards, top-8 high-discomfort electrodes)</p>
+        </div>
+      </div>
+      <figcaption><span class="figno">Average ERP waveforms by label (supplemental material Figs. I16a, I18a).</span> Even when
+      averaging only over the electrodes the models found most useful for the discomfort group, the per-label average
+      ERPs overlap: no grand-average separation exists to exploit, in either dataset.</figcaption>
+    </figure>
+    -->
+  </section>
+
+  <section id="approach">
+    <div class="prose">
+      <p class="sec-label">Approach</p>
+      <h2>The NNILC framework</h2>
+      <p>NNILC (Neural Network Interpretability with Leave-One-Subject-Out and subject-specific
+      Calibration) is a model-agnostic framework that trains neural networks (in this work,
+      EEGNet&nbsp;<a href="#ref-eegnet">[1]</a>, EEG Conformer&nbsp;<a href="#ref-conformer">[2]</a>, and
+      an ImageNet pre-trained EEG ViT&nbsp;<a href="#ref-vit2eeg">[3]</a>) with leave-one-subject-out
+      evaluation, calibrates each model per subject, and extracts interpretability maps (integrated
+      gradients&nbsp;<a href="#ref-ig">[4]</a>, class activation) from models that classify a subject with greater than 75% accuracy. Running this across
+      120 configuration permutations and multiple random seeds for all models reveals which input data
+      (EEG) features the models consistently rely on — and a cross-dataset pass verifies the identified patterns on an independent
+      dataset.</p>
+    </div>
+    <figure>
+      <div class="figcard">
+        <img src="static/images/fig5_methods_overview.png"
+             alt="Graphical abstract: EEG data from a VR cybersickness study feeds leave-one-subject-out training with subject-adaptive calibration; feature-importance maps are extracted per model; 120 configuration permutations check robustness; patterns are verified on the independent VectionVR dataset.">
+      </div>
+      <figcaption><span class="figno">Graphical abstract.</span><br>
+      Contribution 1: identify important features from interpretability maps.<br>
+      Contribution 2: show the patterns are consistent across 120 trials with various pipeline permutations.<br>
+      Contribution 3: verify the patterns cross-dataset on VectionVR.</figcaption>
+    </figure>
+  </section>
+
+
+  <section id="erpvr">
+    <div class="prose">
+      <p class="sec-label">Result 1 · ERPVR: calibration &amp; a consistent pattern</p>
+      <h2>Subject-specific calibration, consistent patterns across subjects</h2>
+      <p>Discomfort detection from very short ERP data is hard, especially when generalizing across
+      people: under leave-one-subject-out evaluation, balanced accuracy is limited — above all for
+      mixed-label subjects (~52–57%) — because EEG varies so much between individuals. NNILC therefore calibrates each model per subject, which boosts balanced accuracy
+      for all three ERPVR participant groups, up to roughly 95.6% (discomfort group) and 89.6%
+      (no-discomfort group) with the pretrained ViT. One point of care: many subjects carry only a single
+      label, so naive calibration would overfit in the extreme — collapsing into always predicting that one
+      label. To prevent this, the calibration training set is explicitly balanced: the missing label's data
+      is drawn from other subjects, selected in PCA space via k-nearest-neighbors to the test subject's
+      data. Interpretability maps are then extracted only from subjects classified with greater than 75%
+      accuracy, so the maps reflect models that genuinely learned.</p>
+    </div>
+    <figure>
+      <div class="figcard">
+        <img src="static/images/fig6_nnilc_calibration.png"
+             alt="NNILC framework diagram: (A) main training with leave-one-subject-out cross-validation; (B) two calibration dataset options — if the test subject has only one label, 12.5% of their data is sampled and top-k other-label data from other subjects is selected nearest the test subject's centroid in whitened PCA space; if both labels, 25% of their data is sampled; (C) calibration fine-tuning from the best validation checkpoint, evaluated on a held-out calibration test set.">
+      </div>
+      <figcaption><span class="figno">The NNILC framework (paper Fig. 6).</span> (A) Main training with
+      leave-one-subject-out cross-validation. (B) Building the calibration dataset: if the test subject has
+      both labels, 25% of their data is sampled; if they have only one label, 12.5% of their data is sampled
+      and the top-k closest other-label data from other subjects (in whitened PCA space) balances the set.
+      (C) Calibration fine-tunes the best validation checkpoint and is evaluated on a held-out calibration
+      test set.</figcaption>
+    </figure>
+    <div class="prose">
+      <p>The key observation is what each of these models, calibrated to different subjects
+      and from different experiment runs, have in common: across
+      120 trials with various pipeline permutations, three architectures (EEGNet, EEG Conformer, pretrained
+      ViT), and multiple random seeds, the integrated gradient interpretability maps converge on overlapping electrode sets across
+      different high-accuracy subjects. For the <strong>discomfort group</strong>, <code>LLPf</code> had the
+      highest integrated gradients for all models and runs, usually followed by <code>LDCe</code> and
+      <code>RDCe</code>, with <code>RMOc</code> and <code>LDPa</code> also generally helpful. For the
+      <strong>no-discomfort group</strong>, centro-parietal locations (<code>MiPa</code>, <code>LMCe</code>,
+      <code>RMCe</code>, <code>MiCe</code>, <code>LMOc</code>) were most useful. That convergence, despite
+      every model being tuned to a different individual, argues the pattern reflects cybersickness-related
+      discomfort itself rather than any one subject, model, or calibration.</p>
+    </div>
+    <figure>
+      <div class="figcard">
+        <img src="static/images/fig3a_ig_per_electrode_erpvr.png"
+             alt="Bar chart of per-electrode integrated gradients for ERPVR, discomfort and no-discomfort groups: LLPf, LDCe, RDCe lead the discomfort group; MiPa, RMCe, LMCe lead the no-discomfort group.">
+      </div>
+      <figcaption><span class="figno">ERPVR per-electrode integrated gradients (paper Fig. 3a).</span> IG
+      summed over time, normalized by the max summed-IG magnitude per run, and averaged over all runs.</figcaption>
+    </figure>
+    <figure>
+      <div class="fig-pair">
+        <div class="figcard">
+          <img src="static/images/fig2_ig_heatmap_erpvr.png"
+               alt="Channel-by-time integrated gradients heatmap for ERPVR discomfort data, EEG Conformer: the LLPf row glows warm through early-to-mid post-stimulus time windows.">
+          <p class="subcap">(a) EEG Conformer calibrated IGs</p>
+        </div>
+        <div class="figcard">
+          <img src="static/images/fig2b_ig_heatmap_erpvr_vit.png"
+               alt="Channel-by-time integrated gradients heatmap for ERPVR discomfort data, pre-trained EEG ViT.">
+          <p class="subcap">(b) Pre-trained EEG ViT calibrated IGs</p>
+        </div>
+        <div class="figcard">
+          <img src="static/images/fig2c_ig_heatmap_erpvr_eegnet.png"
+               alt="Channel-by-time integrated gradients heatmap for ERPVR discomfort data, EEGNet.">
+          <p class="subcap">(c) EEGNet calibrated IGs</p>
+        </div>
+        <div class="figcard">
+          <img src="static/images/fig2d_gradcam_erpvr_eegnet.png"
+               alt="Channel-by-time GradCAM heatmap for ERPVR discomfort data, EEGNet.">
+          <p class="subcap">(d) EEGNet calibrated GradCAM</p>
+        </div>
+      </div>
+      <figcaption><span class="figno">ERPVR integrated gradients over channels × time (paper Fig. 2).</span>
+      Averaged over discomfort data from subjects classified with &gt;75% accuracy, from one of three random
+      seeds; warmer colors indicate more positive contribution to the model's classification. Model importance
+      concentrates on the same electrode rows and in early post-stimulus time windows across models.</figcaption>
+    </figure>
+    <div class="prose">
+      <p>Mixed-label subjects are the strictest test, because within one person the model cannot lean on
+      subject identity. Most are difficult, but a few reached high balanced accuracy after calibration —
+      Subject 15 (81.0%, EEGNet) and Subject 10 (75.1%, EEG Conformer). Their integrated-gradients maps
+      highlight the same electrodes as the all-discomfort-subjects maps — <code>LDCe</code>,
+      <code>LLPf</code>, <code>LMPf</code>, <code>RDCe</code>, <code>MiPf</code> — indicating that some of
+      the learned patterns can carry over to <em>within-subject</em> discomfort classification, not just
+      between-subject discomfort classification.</p>
+    </div>
+    <figure>
+      <div class="fig-pair">
+        <div class="figcard">
+          <img src="static/images/figB1a_subject15_ig.png"
+               alt="Integrated gradients heatmap for ERPVR Subject 15 averaged over discomfort data from the run with balanced accuracy above 75%: LLPf, LMPf, and LDCe rows elevated.">
+          <p class="subcap">(a) Subject 15 (81.0%, EEGNet)</p>
+        </div>
+        <div class="figcard">
+          <img src="static/images/figB1b_subject10_ig.png"
+               alt="Integrated gradients heatmap for ERPVR Subject 10 averaged over discomfort data from the run with balanced accuracy above 75%.">
+          <p class="subcap">(b) Subject 10 (75.1%, EEG Conformer)</p>
+        </div>
+      </div>
+      <figcaption><span class="figno">Mixed-label subjects that reached high balanced accuracy (supplemental
+      material Fig. B1).</span> IGs averaged over discomfort data from the experiment runs where these subjects
+      exceeded 75% balanced accuracy — the same electrodes recur.</figcaption>
+    </figure>
+  </section>
+
+
+  <section id="vectionvr">
+    <div class="prose">
+      <p class="sec-label">Result 2 · Cross-dataset verification on VectionVR</p>
+      <h2>The pattern reappears in an independent dataset</h2>
+      <p>VectionVR is an independent auditory ERP cybersickness study — different participants (n=36),
+      VR stimulus, EEG system, and electrode montage (a modified 30-channel 10–20 layout), with one SSQ
+      rating per subject. Base leave-one-subject-out accuracy is even harder here (the labels are coarser),
+      and subject-specific calibration again lifts accuracy substantially; because every subject carries a
+      single label, VectionVR tests whether the <em>pattern</em> generalizes, not within-subject
+      classification.</p>
+    </div>
+
+    <div class="tablewrap">
+      <table>
+        <caption class="eyebrow" style="caption-side:top; padding-bottom:0.5rem;">VectionVR — balanced accuracy (%), mean ± half the range (max−min)/2 over three seeds (paper Table 2)</caption>
+        <thead>
+          <tr><th>Model</th><th class="num">High base</th><th class="num">High calib</th><th class="num">Low base</th><th class="num">Low calib</th><th class="num">Overall base</th><th class="num">Overall calib</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>EEGNet</td><td class="num">49.9 ± 6.1</td><td class="num">76.1 ± 4.6</td><td class="num">52.9 ± 2.1</td><td class="num">73.1 ± 3.7</td><td class="num">51.6 ± 1.4</td><td class="num">74.4 ± 1.4</td></tr>
+          <tr><td>EEG Conformer</td><td class="num">68.2 ± 5.3</td><td class="num">88.6 ± 1.6</td><td class="num">33.6 ± 1.8</td><td class="num">82.6 ± 2.0</td><td class="num">48.0 ± 2.0</td><td class="num">85.1 ± 0.8</td></tr>
+          <tr><td>ViT (spatial order)</td><td class="num">47.0 ± 4.1</td><td class="num">89.9 ± 0.8</td><td class="num">50.5 ± 3.4</td><td class="num">92.6 ± 1.4</td><td class="num">49.0 ± 3.3</td><td class="num">91.5 ± 0.6</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="prose">
+      <p>The verification is in the attribution maps. For the <strong>high-discomfort group</strong>,
+      central and left centerline areas (<code>C3</code>, <code>T7</code>, <code>CPz</code>) were most
+      useful; for the <strong>low-discomfort group</strong>, left frontal (<code>Fp1</code>,
+      <code>F7</code>) and right parietal (<code>P2</code>, <code>P4</code>, <code>P8</code>) areas led —
+      mirroring the ERPVR discomfort group's left frontal (<code>LLPf</code>) and right parietal
+      (<code>RMOc</code>) pattern at a comparable (intermediate) discomfort level. The anchor:
+      <code>LDCe</code> in ERPVR and <code>C3</code>/<code>T7</code> in VectionVR mark the <em>same left side of the
+      head in central areas above the ears</em>, tagged in both datasets despite entirely different
+      montages. In time, model importance again concentrates in early ERP windows — roughly
+      80–260&nbsp;ms post-stimulus across both datasets — consistent with early sensory processing.</p>
+    </div>
+    <figure>
+      <div class="figcard">
+        <img src="static/images/fig3b_ig_per_electrode_vectionvr.png"
+             alt="Bar chart of per-electrode integrated gradients for VectionVR, high- and low-discomfort groups: C3, T7, CPz lead the high-discomfort group; Fp1 and right parietal electrodes lead the low-discomfort group.">
+      </div>
+      <figcaption><span class="figno">VectionVR per-electrode integrated gradients (paper Fig. 3b).</span> IG
+      summed over time, normalized by the max summed-IG magnitude per run, and averaged over all runs.</figcaption>
+    </figure>
+    <figure>
+      <div class="fig-pair">
+        <div class="figcard">
+          <img src="static/images/fig4_ig_heatmap_vectionvr.png"
+               alt="Channel-by-time integrated gradients heatmap for VectionVR high-discomfort data, EEG Conformer: C3, T7, and CPz rows glow warm in early post-stimulus windows.">
+          <p class="subcap">(a) EEG Conformer calibrated IGs</p>
+        </div>
+        <div class="figcard">
+          <img src="static/images/fig4b_ig_heatmap_vectionvr_vit.png"
+               alt="Channel-by-time integrated gradients heatmap for VectionVR high-discomfort data, pre-trained EEG ViT.">
+          <p class="subcap">(b) Pre-trained EEG ViT calibrated IGs</p>
+        </div>
+        <div class="figcard">
+          <img src="static/images/fig4c_ig_heatmap_vectionvr_eegnet.png"
+               alt="Channel-by-time integrated gradients heatmap for VectionVR high-discomfort data, EEGNet.">
+          <p class="subcap">(c) EEGNet calibrated IGs</p>
+        </div>
+        <div class="figcard">
+          <img src="static/images/fig4d_gradcam_vectionvr_eegnet.png"
+               alt="Channel-by-time GradCAM heatmap for VectionVR high-discomfort data, EEGNet.">
+          <p class="subcap">(d) EEGNet calibrated GradCAM</p>
+        </div>
+      </div>
+      <figcaption><span class="figno">VectionVR integrated gradients over channels × time (paper Fig. 4).</span>
+      Averaged over high-discomfort data from subjects classified with &gt;75% accuracy, from one run of the
+      three seeds; warmer colors indicate more positive contribution to the model's classification.</figcaption>
+    </figure>
+  </section>
+
+
+  <section class="prose" id="datasets">
+    <p class="sec-label">Datasets</p>
+    <h2>Two datasets, two montages</h2>
+    <div class="tablewrap">
+      <table>
+        <thead>
+          <tr><th></th><th>ERPVR (main study)</th><th>VectionVR (replication)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Participants</td><td>29</td><td>36</td></tr>
+          <tr><td>Montage</td><td>16-channel, approx. equidistant</td><td>Modified 30-channel 10–20</td></tr>
+          <tr><td>Discomfort labels</td><td>Per block (4 SSQ ratings)</td><td>One SSQ rating per subject</td></tr>
+          <tr><td>Contribution</td><td>120-run pattern discovery</td><td>Cross-dataset verification</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Both are auditory ERP cybersickness studies, but they differ in participants, VR stimulus, EEG
+    system, and electrode montage — which is exactly what makes the recurrence of the same scalp locations
+    across them meaningful.</p>
+  </section>
+
+
+  <section class="prose" id="bibtex">
+    <p class="sec-label">Citation</p>
+    <h2>BibTeX</h2>
+<div class="bibtex-box"><button class="copy-btn" type="button" onclick="copyBibtex(this)">Copy</button><pre class="bibtex" id="bibtex-src">@misc{yau2026uncoveringeegpatternsconsistently,
+      title={Uncovering EEG Patterns Consistently Associated with Cybersickness Discomfort Using Deep Learning Interpretability Maps},
+      author={Jacqueline Yau and Evan G. Center and Pawel Augustynowicz and Steven M. LaValle and Timo Ojala and Wenzhen Yuan and Nancy M. Amato and Pawel Strozak and Minje Kim and Kara D. Federmeier and Katherine J. Mimnaugh},
+      year={2026},
+      eprint={2512.20620},
+      archivePrefix={arXiv},
+      primaryClass={cs.HC},
+      url={https://arxiv.org/abs/2512.20620},
+}</pre></div>
+  </section>
+
+
+  <section class="prose" id="references">
+    <h2>References</h2>
+        <ol class="refs">
+      <li id="ref-eegnet">Lawhern, V.J., Solon, A.J., Waytowich, N.R., Gordon, S.M., Hung, C.P., Lance, B.J.:
+      <em>EEGNet: a compact convolutional neural network for EEG-based brain–computer interfaces.</em>
+      Journal of Neural Engineering 15(5), 056013 (2018).
+      <a href="https://doi.org/10.1088/1741-2552/aace8c">doi:10.1088/1741-2552/aace8c</a></li>
+      <li id="ref-conformer">Song, Y., Zheng, Q., Liu, B., Gao, X.: <em>EEG Conformer: convolutional transformer
+      for EEG decoding and visualization.</em> IEEE Transactions on Neural Systems and Rehabilitation
+      Engineering 31, 710–719 (2023).
+      <a href="https://doi.org/10.1109/TNSRE.2022.3230250">doi:10.1109/TNSRE.2022.3230250</a></li>
+      <li id="ref-vit2eeg">Yang, R., Modesitt, E.: <em>ViT2EEG: leveraging hybrid pretrained vision transformers
+      for EEG data.</em> arXiv preprint (2023).
+      <a href="https://arxiv.org/abs/2308.00454">arXiv:2308.00454</a></li>
+      <li id="ref-ig">Sundararajan, M., Taly, A., Yan, Q.: <em>Axiomatic attribution for deep networks.</em>
+      In: International Conference on Machine Learning, PMLR 70, pp. 3319–3328 (2017).
+      <a href="https://proceedings.mlr.press/v70/sundararajan17a.html">proceedings.mlr.press/v70/sundararajan17a</a></li>
+      <li id="ref-erpvr">Mimnaugh, K.J., Center, E.G., Suomalainen, M., Becerra, I., Lozano, E., Murrieta-Cid, R.,
+      Ojala, T., LaValle, S.M., Federmeier, K.D.: <em>Virtual reality sickness reduces attention during immersive
+      experiences.</em> IEEE Transactions on Visualization and Computer Graphics 29(11), 4394–4404 (2023).
+      <a href="https://doi.org/10.1109/TVCG.2023.3320222">doi:10.1109/TVCG.2023.3320222</a></li>
+    </ol>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Contact: <a href="mailto:jhyau2@illinois.edu">jhyau2@illinois.edu</a> · <a href="mailto:kmimnau2@illinois.edu">kmimnau2@illinois.edu</a> · Page source on <a href="https://github.com/eeg-discomfort-nnilc/eeg-discomfort-nnilc.github.io">GitHub</a></p>
+    <p>© 2025–2026 the authors. Figures are from the paper; please cite if reused.</p>
+    <p>Page design follows the <a href="https://nerfies.github.io/">Nerfies</a> project-page style.</p>
+  </div>
+</footer>
+
+<script>
+function copyBibtex(btn) {
+  navigator.clipboard.writeText(document.getElementById("bibtex-src").textContent).then(function () {
+    btn.textContent = "Copied!";
+    setTimeout(function () { btn.textContent = "Copy"; }, 1500);
+  });
+}
+</script>
+</body>
+</html>

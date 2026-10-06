@@ -1,0 +1,261 @@
+/* ---- tokens ---- */
+:root {
+  --bg: #ffffff;
+  --ink: #363636;
+  --head: #1a1a1a;
+  --muted: #6b7278;
+  --accent: #3273dc;
+  --btn: #363636;
+  --btn-ink: #ffffff;
+  --sick: #c0392b;
+  --nonsick: #2e6da4;
+  --card: #ffffff;
+  --line: #e2e5e8;
+  --code-bg: #f5f5f5;
+  --ph-bg: #fff7e6;
+  --ph-line: #d9a521;
+  --ph-ink: #7a5a00;
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #121416;
+    --ink: #d6dadd;
+    --head: #f0f2f4;
+    --muted: #9aa3ab;
+    --accent: #6ea8f7;
+    --btn: #e8eaec;
+    --btn-ink: #121416;
+    --sick: #e0705f;
+    --nonsick: #7ba7de;
+    --card: #1a1d20;
+    --line: #2a2e33;
+    --code-bg: #1a1d20;
+    --ph-bg: #2a2210;
+    --ph-line: #b3891c;
+    --ph-ink: #e8c568;
+    --shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  }
+}
+:root[data-theme="light"] {
+  --bg: #ffffff; --ink: #363636; --head: #1a1a1a; --muted: #6b7278;
+  --accent: #3273dc; --btn: #363636; --btn-ink: #ffffff;
+  --sick: #c0392b; --nonsick: #2e6da4; --card: #ffffff; --line: #e2e5e8;
+  --code-bg: #f5f5f5; --ph-bg: #fff7e6; --ph-line: #d9a521; --ph-ink: #7a5a00;
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+:root[data-theme="dark"] {
+  --bg: #121416; --ink: #d6dadd; --head: #f0f2f4; --muted: #9aa3ab;
+  --accent: #6ea8f7; --btn: #e8eaec; --btn-ink: #121416;
+  --sick: #e0705f; --nonsick: #7ba7de; --card: #1a1d20; --line: #2a2e33;
+  --code-bg: #1a1d20; --ph-bg: #2a2210; --ph-line: #b3891c; --ph-ink: #e8c568;
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+/* ---- base ---- */
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Noto Sans", "Segoe UI", system-ui, -apple-system, Helvetica, Arial, sans-serif;
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+h1, h2, h3 {
+  color: var(--head);
+  line-height: 1.25;
+  text-wrap: balance;
+  margin: 0 0 0.6em;
+  font-weight: 700;
+}
+h1 { font-size: clamp(1.8rem, 4.5vw, 2.5rem); }
+h2 { font-size: 1.7rem; text-align: center; margin-top: 0; }
+p { margin: 0 0 1em; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+a:focus-visible, button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+img { max-width: 100%; height: auto; display: block; }
+sup { font-size: 0.7em; }
+
+.wrap { max-width: 60rem; margin: 0 auto; padding: 0 1.25rem; }
+.prose { max-width: 46rem; margin-left: auto; margin-right: auto; }
+
+/* ---- header ---- */
+.masthead { text-align: center; padding: 3rem 0 0.5rem; }
+.eyebrow {
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 1rem;
+}
+.authors { font-size: 1.1rem; margin: 1rem 0 0.15rem; }
+.authors .au { white-space: nowrap; color: var(--accent); }
+.affil { color: var(--muted); font-size: 0.95rem; margin-bottom: 1.4rem; }
+.btn-row { display: flex; flex-wrap: wrap; gap: 0.6rem; justify-content: center; margin: 1.2rem 0 0; }
+.btn {
+  display: inline-flex; align-items: center; gap: 0.45rem;
+  padding: 0.55rem 1.2rem;
+  border-radius: 999px;
+  background: var(--btn);
+  color: var(--btn-ink);
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  border: 1px solid transparent;
+}
+.btn:hover { opacity: 0.85; text-decoration: none; }
+.btn.disabled {
+  background: transparent;
+  color: var(--muted);
+  border-color: var(--line);
+  cursor: default;
+  pointer-events: none;
+}
+
+/* ---- sections ---- */
+section { margin: 3.5rem 0; }
+.sec-label {
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+  text-align: center;
+}
+
+/* ---- figures ---- */
+figure { margin: 1.75rem 0; }
+.figcard {
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0.75rem;
+  box-shadow: var(--shadow);
+}
+.fig-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+@media (max-width: 640px) { .fig-pair { grid-template-columns: 1fr; } }
+figcaption {
+  font-size: 0.92rem;
+  color: var(--muted);
+  margin-top: 0.8rem;
+  max-width: 46rem;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+figcaption .figno { color: var(--head); font-weight: 700; }
+
+/* ---- tables ---- */
+.tablewrap { overflow-x: auto; margin: 1.5rem 0; }
+table {
+  border-collapse: collapse;
+  font-size: 0.95rem;
+  min-width: 34rem;
+  margin: 0 auto;
+  font-variant-numeric: tabular-nums;
+}
+caption { color: var(--muted); font-weight: 700; }
+th, td { padding: 0.45rem 0.9rem; text-align: left; border-bottom: 1px solid var(--line); }
+th {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  border-bottom: 2px solid var(--head);
+}
+td.num, th.num { text-align: right; }
+tr.hl td { font-weight: 700; }
+
+/* ---- semantic emphasis ---- */
+.sick, .nonsick { font-weight: 700; }
+.sick { color: var(--sick); }
+.nonsick { color: var(--nonsick); }
+code, .mono {
+  font-family: ui-monospace, "Cascadia Code", Menlo, Consolas, monospace;
+  font-size: 0.88em;
+  background: var(--code-bg);
+  border-radius: 4px;
+  padding: 0.1em 0.35em;
+}
+
+/* ---- placeholders ---- */
+.placeholder {
+  background: var(--ph-bg);
+  border: 1px dashed var(--ph-line);
+  color: var(--ph-ink);
+  border-radius: 6px;
+  padding: 0.05em 0.4em;
+}
+.ph-block {
+  background: var(--ph-bg);
+  border: 1px dashed var(--ph-line);
+  color: var(--ph-ink);
+  border-radius: 8px;
+  padding: 0.9rem 1.1rem;
+  font-size: 0.95rem;
+  margin: 1.25rem 0;
+}
+
+/* ---- bibtex ---- */
+.bibtex-box { position: relative; }
+pre.bibtex {
+  background: var(--code-bg);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 1.1rem 1.3rem;
+  overflow-x: auto;
+  font-family: ui-monospace, "Cascadia Code", Menlo, Consolas, monospace;
+  font-size: 0.85rem;
+  line-height: 1.55;
+  margin: 0;
+}
+.copy-btn {
+  position: absolute; top: 0.6rem; right: 0.6rem;
+  font: inherit; font-size: 0.8rem; font-weight: 600;
+  padding: 0.3rem 0.8rem; border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--bg); color: var(--ink);
+  cursor: pointer;
+}
+.copy-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+/* ---- footer ---- */
+footer {
+  margin-top: 3.5rem;
+  padding: 2rem 0 2.5rem;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+/* ---- panel subcaptions ---- */
+.subcap {
+  font-size: 0.85rem;
+  color: var(--muted);
+  text-align: center;
+  margin: 0.5rem 0 0;
+}
+
+/* ---- model references ---- */
+.refs {
+  font-size: 0.88rem;
+  color: var(--muted);
+  padding-left: 1.4rem;
+  margin: 1rem 0 0;
+}
+.refs li { margin-bottom: 0.4rem; }
+
+/* ---- venue line ---- */
+.venue {
+  font-weight: 700;
+  font-style: italic;
+  margin: 0.2rem 0 1rem;
+}
